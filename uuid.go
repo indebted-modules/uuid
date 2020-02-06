@@ -2,19 +2,11 @@ package uuid
 
 import (
 	"github.com/google/uuid"
-	"github.com/rs/zerolog/log"
 )
 
 // NewID generates UUID V4
 func NewID() string {
-	v4, err := uuid.NewRandom()
-	if err != nil {
-		log.
-			Fatal().
-			Err(err).
-			Msg("Failed generating UUID")
-	}
-	return v4.String()
+	return uuid.Must(uuid.NewRandom()).String()
 }
 
 // NewIDFor generates the same UUID (V5) for the given namespace and value

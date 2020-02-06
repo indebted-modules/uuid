@@ -17,10 +17,8 @@ func TestUUIDSuite(t *testing.T) {
 }
 
 func (s *UUIDSuite) TestNewID() {
-	id := uuid.NewID()
-	a, err := googleuuid.Parse(id)
-	s.Nil(err)
-	s.True(a.Variant() == googleuuid.RFC4122)
+	id := googleuuid.MustParse(uuid.NewID())
+	s.True(id.Variant() == googleuuid.RFC4122)
 }
 
 func (s *UUIDSuite) TestNewIDFor() {
