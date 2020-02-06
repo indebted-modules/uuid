@@ -23,6 +23,23 @@ func (s *UUIDSuite) TestNewID() {
 	s.True(a.Variant() == googleuuid.RFC4122)
 }
 
+func (s *UUIDSuite) TestNewIDFor() {
+	s.Equal(uuid.NewIDFor("ns1", "A"), uuid.NewIDFor("ns1", "A"))
+	s.Equal(uuid.NewIDFor("ns1", "B"), uuid.NewIDFor("ns1", "B"))
+	s.Equal(uuid.NewIDFor("ns1", "C"), uuid.NewIDFor("ns1", "C"))
+
+	s.NotEqual(uuid.NewIDFor("ns1", "A"), uuid.NewIDFor("ns2", "A"))
+	s.NotEqual(uuid.NewIDFor("ns1", "B"), uuid.NewIDFor("ns2", "B"))
+	s.NotEqual(uuid.NewIDFor("ns1", "C"), uuid.NewIDFor("ns2", "C"))
+
+	s.NotEqual(uuid.NewIDFor("ns1", "A"), uuid.NewIDFor("ns1", "B"))
+	s.NotEqual(uuid.NewIDFor("ns1", "B"), uuid.NewIDFor("ns1", "C"))
+	s.NotEqual(uuid.NewIDFor("ns1", "C"), uuid.NewIDFor("ns1", "A"))
+
+	id := googleuuid.MustParse(uuid.NewIDFor("ns1", "A"))
+	s.True(id.Variant() == googleuuid.RFC4122)
+}
+
 func (s *UUIDSuite) TestValidateID() {
 	s.False(uuid.ValidateID("r4nd0m"))
 	s.False(uuid.ValidateID("00000000-0000-0000-0000-000000000000"))
