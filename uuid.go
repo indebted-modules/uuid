@@ -15,7 +15,7 @@ func NewIDFor(namespace string, value string) string {
 	return uuid.NewSHA1(nsUUID, []byte(value)).String()
 }
 
-// ValidateID checks whether the given string is a valid UUID V4
+// ValidateID checks whether the given string is a valid RFC4122-compliant UUID
 func ValidateID(s string) bool {
 	id, err := uuid.Parse(s)
 	return err == nil && id.Variant() == uuid.RFC4122
